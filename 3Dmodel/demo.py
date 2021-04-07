@@ -22,6 +22,7 @@ from __future__ import print_function
 import sys
 from absl import flags
 import numpy as np
+import cPickle as pickle
 
 import skimage.io as io
 import tensorflow as tf
@@ -136,7 +137,9 @@ def main(img_path, json_path=None):
     joints, verts, cams, joints3d, theta = model.predict(
         input_img, get_theta=True)
 
-    print(joints.shape)
+    f = open("verts.pkl", 'w')
+    pickle.dump(verts, f)
+    f.close()
 
     visualize(img, proc_param, joints[0], verts[0], cams[0])
 
@@ -150,6 +153,6 @@ if __name__ == '__main__':
     config.batch_size = 1
 
     renderer = vis_util.SMPLRenderer(face_path=config.smpl_face_path)
-    mesh = renderer.Mesh
+    #mesh = renderer.Mesh
     #renderer = rend.TrimeshRenderer(face_path=config.smpl_face_path)
     main(config.img_path, config.json_path)
