@@ -11,12 +11,21 @@
         android:layout_height="wrap_content"
         android:theme="@style/Theme.BodyMeasurementDisplay.AppBarOverlay">
 
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFFFFF"
+            app:srcCompat="@drawable/toolbar" />
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/Theme.BodyMeasurementDisplay.PopupOverlay" />
+            android:layout_height="3dp"
+            android:background="@color/design_default_color_background"
+            android:visibility="visible"
+            app:popupTheme="@style/Theme.BodyMeasurementDisplay.PopupOverlay"
+            tools:visibility="visible" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -24,10 +33,17 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
-        android:layout_width="wrap_content"
+        android:layout_width="134dp"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        app:backgroundTint="#FF9800"
+        app:srcCompat="@drawable/measureme" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="match_parent"
+        android:layout_height="672dp"
+        app:srcCompat="@drawable/staticb" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
