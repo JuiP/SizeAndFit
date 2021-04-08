@@ -6,7 +6,7 @@ Note that HMR requires the bounding box of the person in the image. The best per
 When only the image path is supplied, it assumes that the image is centered on a person whose length is roughly 150px.
 Alternatively, you can supply output of the openpose to figure out the bbox and the right scale factor.
 
-Sample usage:
+usage:
 
 # On images on a tightly cropped image around the person
 python -m demo --img_path data/im1963.jpg
@@ -27,7 +27,6 @@ import cPickle as pickle
 import skimage.io as io
 import tensorflow as tf
 
-#from src.util import trimesh_rendered as rend
 from src.util import renderer as vis_util
 from src.util import image as img_util
 from src.util import openpose as op_util
@@ -47,9 +46,6 @@ def visualize(img, proc_param, joints, verts, cam):
     cam_for_render, vert_shifted, joints_orig = vis_util.get_original(
         proc_param, verts, cam, joints, img_size=img.shape[:2])
 
-    '''print("cam_for_render", cam_for_render)
-    print("vert_shifted", vert_shifted)
-    print("joints_orig", joints_orig)'''
 
     # Render results
     skel_img = vis_util.draw_skeleton(img, joints_orig)
