@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/measure_me"
-        android:name="com.example.bodymeasurementdisplay.ui.home.HomeFragment"
+        android:name="com.example.bodymeasurementdisplay.ui.measureme.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/wishlist"
-        android:name="com.example.bodymeasurementdisplay.ui.gallery.GalleryFragment"
+        android:name="com.example.bodymeasurementdisplay.ui.wishlist.GalleryFragment"
         android:label="@string/menu_gallery"
         tools:layout="@layout/fragment_gallery" />
 

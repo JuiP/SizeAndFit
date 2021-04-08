@@ -40,10 +40,4 @@
         app:backgroundTint="#FF9800"
         app:srcCompat="@drawable/measureme" />
 
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="match_parent"
-        android:layout_height="672dp"
-        app:srcCompat="@drawable/staticb" />
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
