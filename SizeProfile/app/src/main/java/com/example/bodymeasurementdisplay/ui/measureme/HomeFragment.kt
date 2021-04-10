@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment
 import com.example.bodymeasurementdisplay.R
 
 
+
 class HomeFragment : Fragment() {
 
     protected lateinit var root: View
@@ -39,11 +40,16 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
-        val btn_click_me = root.findViewById<Button>(R.id.button)
+        val camera = root.findViewById<Button>(R.id.button)
         imageView = root.findViewById<ImageView>(R.id.my_image)
-        btn_click_me.setOnClickListener {
+        camera.setOnClickListener {
             /*dispatchTakePictureIntent()*/
             selectImage()
+        }
+
+        val instructions = root.findViewById<Button>(R.id.instructions)
+        instructions.setOnClickListener {
+            getInstructions()
         }
     }
 
@@ -86,10 +92,11 @@ class HomeFragment : Fragment() {
             currentPhotoPath = absolutePath
         }
     }*/
+
     private fun selectImage() {
         val options = arrayOf<CharSequence>("Take Photo", "Choose from Gallery", "Cancel")
         val builder: AlertDialog.Builder = AlertDialog.Builder(context)
-        builder.setTitle("Choose your profile picture")
+        builder.setTitle("Choose your picture")
         builder.setItems(options, DialogInterface.OnClickListener { dialog, item ->
             if (options[item] == "Take Photo") {
                 val takePicture = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -103,6 +110,13 @@ class HomeFragment : Fragment() {
         })
         builder.show()
 
+    }
+
+    private fun getInstructions() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+        builder.setTitle("Instructions")
+        builder.setMessage("Click a picture with your feat and hands apart. Click on measureme button to get your measurements!")
+        builder.show()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -122,7 +136,29 @@ class HomeFragment : Fragment() {
                             cursor.moveToFirst()
                             val columnIndex: Int = cursor.getColumnIndex(filePathColumn[0])
                             val picturePath: String = cursor.getString(columnIndex)
-                            imageView?.setImageBitmap(BitmapFactory.decodeFile(picturePath))
+
+                            // Get the dimensions of the View
+                            val targetW: Int = imageView!!.width
+                            val targetH: Int = imageView!!.height
+
+                            val bmOptions = BitmapFactory.Options().apply {
+                                // Get the dimensions of the bitmap
+                                inJustDecodeBounds = true
+                                BitmapFactory.decodeFile(picturePath, this)
+
+                                val photoW: Int = imageView!!.width
+                                val photoH: Int = imageView!!.height
+
+                                // Determine how much to scale down the image
+                                val scaleFactor: Int = Math.max(1, Math.min(photoW / targetW, photoH / targetH))
+
+                                // Decode the image file into a Bitmap sized to fill the View
+                                inJustDecodeBounds = false
+                                inSampleSize = scaleFactor
+                                inPurgeable = true
+                            }
+                            imageView?.setImageBitmap(BitmapFactory.decodeFile(picturePath, bmOptions))
+
                             cursor.close()
                         }
                     }

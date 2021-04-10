@@ -54,8 +54,8 @@
         android:layout_height="51dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="82dp"
-        android:layout_marginBottom="576dp"
+        android:layout_marginEnd="81dp"
+        android:layout_marginBottom="487dp"
         android:src="@drawable/ic_menu_camera" />
 
     <Button
@@ -64,31 +64,21 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="19dp"
-        android:layout_marginBottom="576dp"
-        android:text="CAMERA"
+        android:layout_marginEnd="18dp"
+        android:layout_marginBottom="491dp"
+        android:text="ULOAD"
         app:backgroundTint="#E91E63" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/instructions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="489dp"
-        android:text="UPLOAD"
+        android:layout_marginEnd="23dp"
+        android:layout_marginBottom="570dp"
+        android:text="INSTRUCTIONS"
         app:backgroundTint="#FF9800" />
-
-    <ImageView
-        android:id="@+id/imageView10"
-        android:layout_width="66dp"
-        android:layout_height="55dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="115dp"
-        android:layout_marginBottom="487dp"
-        android:src="@drawable/ic_menu_gallery" />
 
     <Button
         android:id="@+id/button3"
