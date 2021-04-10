@@ -23,10 +23,9 @@ import sys
 from absl import flags
 import numpy as np
 import cPickle as pickle
-
+import matplotlib.pyplot as plt
 import skimage.io as io
 import tensorflow as tf
-
 from src.util import renderer as vis_util
 from src.util import image as img_util
 from src.util import openpose as op_util
@@ -38,6 +37,12 @@ flags.DEFINE_string(
     'json_path', None,
     'If specified, uses the openpose output to crop the image.')
 
+config = flags.FLAGS
+config(sys.argv)
+#     # Using pre-trained model, change this to use your own.
+config.load_path = src.config.PRETRAINED_MODEL
+
+config.batch_size = 1
 
 def visualize(img, proc_param, joints, verts, cam):
     """
@@ -58,7 +63,6 @@ def visualize(img, proc_param, joints, verts, cam):
     rend_img_vp2 = renderer.rotated(
         vert_shifted, -60, cam=cam_for_render, img_size=img.shape[:2])
 
-    import matplotlib.pyplot as plt
     # plt.ion()
     plt.figure(1)
     plt.clf()
@@ -119,10 +123,12 @@ def preprocess_image(img_path, json_path=None):
 
 
 def main(img_path, json_path=None):
+    
     sess = tf.Session()
     model = RunModel(config, sess=sess)
 
     input_img, proc_param, img = preprocess_image(img_path, json_path)
+
     # Add batch dimension: 1 x D x D x 3
     input_img = np.expand_dims(input_img, 0)
 
@@ -137,18 +143,20 @@ def main(img_path, json_path=None):
     pickle.dump(verts, f)
     f.close()
 
-    visualize(img, proc_param, joints[0], verts[0], cams[0])
+    # visualize(img, proc_param, joints[0], verts[0], cams[0])
 
 
-if __name__ == '__main__':
-    config = flags.FLAGS
-    config(sys.argv)
-    # Using pre-trained model, change this to use your own.
-    config.load_path = src.config.PRETRAINED_MODEL
+# if __name__ == '__main__':
+#     config = flags.FLAGS
+#     config(sys.argv)
+#     #     # Using pre-trained model, change this to use your own.
+#     config.load_path = src.config.PRETRAINED_MODEL
 
-    config.batch_size = 1
+#     config.batch_size = 1
 
-    renderer = vis_util.SMPLRenderer(face_path=config.smpl_face_path)
-    #mesh = renderer.Mesh
-    #renderer = rend.TrimeshRenderer(face_path=config.smpl_face_path)
-    main(config.img_path, config.json_path)
+#     # renderer = vis_util.SMPLRenderer(face_path=config.smpl_face_path)
+#     #mesh = renderer.Mesh
+#     #renderer = rend.TrimeshRenderer(face_path=config.smpl_face_path)
+    # main(config.img_path, config.json_path)
+
+# main("data/coco1.png")

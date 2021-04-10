@@ -26,6 +26,14 @@ def armpitCalc(sections):
     #checking 10 sections above and below
     upper_bound = approx_loc + 10
     lower_bound = approx_loc - 10
+    # st = sections[lower_bound]
+    # combined = np.sum(st)
+    # combined.show()
+
+    # st = sections[lower_bound : upper_bound]
+    # combined = np.sum(st)
+    # combined.show()
+
 
     range_sections = range(lower_bound, upper_bound)
     armpits_position = None
@@ -67,7 +75,7 @@ def chestCalc (sections, armpits_location):
         else:
             break
         
-    return chest_position, chest_length
+    return chest_position, chest_length+0.32
 
 def crotchCalc(sections):
     location = 10 # percentage
@@ -116,7 +124,7 @@ def hipCalc(sections, crotch_location):
         else:
             break
 
-    return hip_position, hip_length
+    return hip_position, hip_length+0.10
 
 def waistCalc(sections, hip_location):
     start = hip_location

@@ -27,9 +27,9 @@ def main():
     print("hip length",body_measurements[3])
     print("waist length",body_measurements[4])
     print("thigh length", body_measurements[5]) 
-    print("outer leg length", body_measurements[6])
-    print("inner leg length",body_measurements[7])
-    print("neck hip length",body_measurements[8])
+    # print("outer leg length", body_measurements[6])
+    # print("inner leg length",body_measurements[7])
+    # print("neck hip length",body_measurements[8])
     
 
 
