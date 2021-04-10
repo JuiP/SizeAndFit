@@ -1,9 +1,15 @@
 package com.example.bodymeasurementdisplay.ui.measureme
 
+import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
+import android.app.AlertDialog
 import android.content.ActivityNotFoundException
+import android.content.DialogInterface
 import android.content.Intent
+import android.database.Cursor
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
@@ -12,26 +18,18 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
-import com.example.bodymeasurementdisplay.CustomAdapter
 import com.example.bodymeasurementdisplay.R
 
 
 class HomeFragment : Fragment() {
 
     protected lateinit var root: View
-
-    companion object{
-        private const val CAMERA_PERMISSION_CODE = 1
-        private const val CAMERA_REQUEST_CODE = 2
-    }
+    private var imageView: ImageView? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         root = inflater.inflate(R.layout.fragment_home, container, false)
         return root
@@ -42,8 +40,10 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
         val btn_click_me = root.findViewById<Button>(R.id.button)
+        imageView = root.findViewById<ImageView>(R.id.my_image)
         btn_click_me.setOnClickListener {
-            dispatchTakePictureIntent()
+            /*dispatchTakePictureIntent()*/
+            selectImage()
         }
     }
 
@@ -60,11 +60,74 @@ class HomeFragment : Fragment() {
 
 
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+
+    /*override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             val imageBitmap = data!!.extras!!.get("data") as Bitmap
-            val imageView = requireActivity().findViewById<View>(R.id.imageView9) as ImageView
+            val imageView = requireActivity().findViewById<View>(R.id.my_image) as ImageView
             imageView.setImageBitmap(imageBitmap)
+        }
+    }*/
+
+    /*lateinit var currentPhotoPath: String
+
+    @Throws(IOException::class)
+    private fun createImageFile(): File {
+        // Create an image file name
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val storageDir: File? = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(
+                "JPEG_${timeStamp}_", *//* prefix *//*
+                ".jpg", *//* suffix *//*
+                storageDir *//* directory *//*
+        ).apply {
+            // Save a file: path for use with ACTION_VIEW intents
+            currentPhotoPath = absolutePath
+        }
+    }*/
+    private fun selectImage() {
+        val options = arrayOf<CharSequence>("Take Photo", "Choose from Gallery", "Cancel")
+        val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+        builder.setTitle("Choose your profile picture")
+        builder.setItems(options, DialogInterface.OnClickListener { dialog, item ->
+            if (options[item] == "Take Photo") {
+                val takePicture = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                startActivityForResult(takePicture, 0)
+            } else if (options[item] == "Choose from Gallery") {
+                val pickPhoto = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                startActivityForResult(pickPhoto, 1)
+            } else if (options[item] == "Cancel") {
+                dialog.dismiss()
+            }
+        })
+        builder.show()
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode != RESULT_CANCELED) {
+            when (requestCode) {
+                0 -> if (resultCode == RESULT_OK && data != null) {
+                    val selectedImage = data.extras!!["data"] as Bitmap?
+                    imageView?.setImageBitmap(selectedImage)
+                }
+                1 -> if (resultCode == RESULT_OK && data != null) {
+                    val selectedImage: Uri? = data.data
+                    val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
+                    if (selectedImage != null) {
+                        val cursor: Cursor? = activity?.contentResolver?.query(selectedImage,
+                                filePathColumn, null, null, null)
+                        if (cursor != null) {
+                            cursor.moveToFirst()
+                            val columnIndex: Int = cursor.getColumnIndex(filePathColumn[0])
+                            val picturePath: String = cursor.getString(columnIndex)
+                            imageView?.setImageBitmap(BitmapFactory.decodeFile(picturePath))
+                            cursor.close()
+                        }
+                    }
+                }
+            }
         }
     }
 }
