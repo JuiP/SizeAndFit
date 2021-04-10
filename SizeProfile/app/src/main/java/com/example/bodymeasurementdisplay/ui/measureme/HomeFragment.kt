@@ -18,8 +18,10 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.bodymeasurementdisplay.R
-
+import com.example.bodymeasurementdisplay.ui.measureme.Model.Measurement
 
 
 class HomeFragment : Fragment() {
@@ -40,6 +42,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
+
         val camera = root.findViewById<Button>(R.id.button)
         imageView = root.findViewById<ImageView>(R.id.my_image)
         camera.setOnClickListener {
@@ -50,6 +53,16 @@ class HomeFragment : Fragment() {
         val instructions = root.findViewById<Button>(R.id.instructions)
         instructions.setOnClickListener {
             getInstructions()
+        }
+
+        val measureR = root.findViewById<RecyclerView>(R.id.recycler_view)
+        val measurement = arrayListOf<Measurement>()
+        for (i in 0..100){
+            measurement.add(Measurement("Height", 165.0))
+        }
+        measureR.apply{
+            layoutManager = LinearLayoutManager(this@HomeFragment.requireActivity())
+            adapter = MeasurementAdapter(measurement)
         }
     }
 
