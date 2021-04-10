@@ -3,7 +3,6 @@ package com.example.bodymeasurementdisplay.ui.measureme
 import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
-import android.content.ActivityNotFoundException
 import android.content.DialogInterface
 import android.content.Intent
 import android.database.Cursor
@@ -38,15 +37,12 @@ class HomeFragment : Fragment() {
         return root
     }
 
-    val REQUEST_IMAGE_CAPTURE = 1
-
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
 
         val camera = root.findViewById<Button>(R.id.button)
         imageView = root.findViewById<ImageView>(R.id.my_image)
         camera.setOnClickListener {
-            /*dispatchTakePictureIntent()*/
             selectImage()
         }
 
@@ -65,46 +61,6 @@ class HomeFragment : Fragment() {
             adapter = MeasurementAdapter(measurement)
         }
     }
-
-
-
-    private fun dispatchTakePictureIntent() {
-        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        try {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
-        } catch (e: ActivityNotFoundException) {
-            // display error state to the user
-        }
-    }
-
-
-
-
-
-    /*override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            val imageBitmap = data!!.extras!!.get("data") as Bitmap
-            val imageView = requireActivity().findViewById<View>(R.id.my_image) as ImageView
-            imageView.setImageBitmap(imageBitmap)
-        }
-    }*/
-
-    /*lateinit var currentPhotoPath: String
-
-    @Throws(IOException::class)
-    private fun createImageFile(): File {
-        // Create an image file name
-        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val storageDir: File? = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        return File.createTempFile(
-                "JPEG_${timeStamp}_", *//* prefix *//*
-                ".jpg", *//* suffix *//*
-                storageDir *//* directory *//*
-        ).apply {
-            // Save a file: path for use with ACTION_VIEW intents
-            currentPhotoPath = absolutePath
-        }
-    }*/
 
     private fun selectImage() {
         val options = arrayOf<CharSequence>("Take Photo", "Choose from Gallery", "Cancel")
