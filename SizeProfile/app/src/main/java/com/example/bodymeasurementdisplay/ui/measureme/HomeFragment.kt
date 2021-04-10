@@ -21,6 +21,8 @@ import com.example.bodymeasurementdisplay.R
 
 class HomeFragment : Fragment() {
 
+    protected lateinit var root: View
+
     companion object{
         private const val CAMERA_PERMISSION_CODE = 1
         private const val CAMERA_REQUEST_CODE = 2
@@ -31,17 +33,19 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.fragment_home, container, false)
-        val btn_click_me = requireActivity().findViewById<Button>(R.id.button)
-        /*btn_click_me.setOnClickListener {
-            dispatchTakePictureIntent()
-        }*/
-
+        root = inflater.inflate(R.layout.fragment_home, container, false)
         return root
     }
 
     val REQUEST_IMAGE_CAPTURE = 1
 
+    override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(itemView, savedInstanceState)
+        val btn_click_me = root.findViewById<Button>(R.id.button)
+        btn_click_me.setOnClickListener {
+            dispatchTakePictureIntent()
+        }
+    }
 
 
 
