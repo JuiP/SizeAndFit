@@ -1,5 +1,6 @@
 package com.example.bodymeasurementdisplay.ui.measureme
 
+import android.annotation.SuppressLint
 import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
@@ -51,6 +52,11 @@ class HomeFragment : Fragment() {
             getInstructions()
         }
 
+        val mesh = root.findViewById<Button>(R.id.measuremesh)
+        mesh.setOnClickListener {
+            getMeasurements()
+        }
+
         val measureR = root.findViewById<RecyclerView>(R.id.recycler_view)
         val measurement = arrayListOf<Measurement>()
         for (i in 0..100){
@@ -86,6 +92,19 @@ class HomeFragment : Fragment() {
         builder.setTitle("Instructions")
         builder.setMessage("Click a picture with your feat and hands apart. Click on measureme button to get your measurements!")
         builder.show()
+    }
+
+    /*private fun getMeasurements() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+        builder.setTitle("BodyMesh")
+
+
+
+    }
+*/
+    @SuppressLint("NewApi")
+    private fun getMeasurements() {
+        AlertDialog.Builder(this.requireActivity()).setView(R.layout.modelgif).show()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
