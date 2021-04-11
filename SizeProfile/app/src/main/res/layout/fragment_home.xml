@@ -30,13 +30,13 @@
         android:layout_marginStart="-18dp"
         android:layout_marginEnd="136dp"
         android:layout_marginBottom="399dp"
-        android:src="@drawable/man"
+        android:src="@drawable/modelapose"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.035"
-        app:srcCompat="@drawable/man" />
+        app:srcCompat="@drawable/modelapose" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@id/recycler_view"
@@ -66,7 +66,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="18dp"
         android:layout_marginBottom="491dp"
-        android:text="ULOAD"
+        android:text="UPLOAD"
         app:backgroundTint="#E91E63" />
 
     <Button

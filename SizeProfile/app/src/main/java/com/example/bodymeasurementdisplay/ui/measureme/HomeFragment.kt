@@ -163,7 +163,9 @@ class HomeFragment : Fragment() {
                                 inSampleSize = scaleFactor
                                 inPurgeable = true
                             }
-                            imageView?.setImageBitmap(BitmapFactory.decodeFile(picturePath, bmOptions))
+                            //imageView?.setImageBitmap(BitmapFactory.decodeFile(picturePath, bmOptions))
+                            imageView?.setImageResource(R.drawable.man)
+                            //imageView?.setBackgroundResource(R.drawable.man)
 
                             cursor.close()
                         }
