@@ -59,9 +59,16 @@ class HomeFragment : Fragment() {
 
         val measureR = root.findViewById<RecyclerView>(R.id.recycler_view)
         val measurement = arrayListOf<Measurement>()
-        for (i in 0..100){
-            measurement.add(Measurement("Height", 165.0))
-        }
+
+        measurement.add(Measurement("Height", 00.00))
+        measurement.add(Measurement("Weight", 00.00))
+        measurement.add(Measurement("chest", 00.00))
+        measurement.add(Measurement("hip", 00.00))
+        measurement.add(Measurement("waist", 00.00))
+        measurement.add(Measurement("thigh", 00.00))
+        measurement.add(Measurement("--", 00.00))
+
+
         measureR.apply{
             layoutManager = LinearLayoutManager(this@HomeFragment.requireActivity())
             adapter = MeasurementAdapter(measurement)
@@ -94,17 +101,28 @@ class HomeFragment : Fragment() {
         builder.show()
     }
 
-    /*private fun getMeasurements() {
-        val builder: AlertDialog.Builder = AlertDialog.Builder(context)
-        builder.setTitle("BodyMesh")
-
-
-
-    }
-*/
     @SuppressLint("NewApi")
     private fun getMeasurements() {
-        AlertDialog.Builder(this.requireActivity()).setView(R.layout.modelgif).show()
+        val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+        builder.setView(R.layout.modelgif)
+        builder.setTitle("3D mesh")
+        builder.show()
+
+        val measureR = root.findViewById<RecyclerView>(R.id.recycler_view)
+        val measurement = arrayListOf<Measurement>()
+
+        measurement.add(Measurement("Height", 167.354))
+        measurement.add(Measurement("Weight", 83.909))
+        measurement.add(Measurement("chest", 83.43))
+        measurement.add(Measurement("hip", 71.39))
+        measurement.add(Measurement("waist", 66.91))
+        measurement.add(Measurement("thigh", 61.18))
+        measurement.add(Measurement("--", 00.00))
+
+        measureR.apply{
+            layoutManager = LinearLayoutManager(this@HomeFragment.requireActivity())
+            adapter = MeasurementAdapter(measurement)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

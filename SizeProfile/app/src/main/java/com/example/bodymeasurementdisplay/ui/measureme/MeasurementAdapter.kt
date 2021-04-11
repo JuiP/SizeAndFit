@@ -19,6 +19,7 @@ class MeasurementAdapter(private val measurement: ArrayList<Measurement>) : Recy
 
     override fun onBindViewHolder(holder: MeasurementAdapter.ViewHolder, position: Int){
         holder.title.text = measurement[position].title
+        holder.measure.text = measurement[position].measure.toString()
     }
 
     override fun getItemCount() =  measurement.size
